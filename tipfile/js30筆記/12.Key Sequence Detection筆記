@@ -1,0 +1,11 @@
+12.Key Sequence Detection筆記
+==============================
+這題主要在練習array.every的方法，並且比較兩個陣列完全相同才return true。
+一開始對於every裡面要傳參數還有點困擾，結果其實他預設就會傳三個參數進去了，只要接收的function有宣告變數去接他就可以使用了!
+
+
+skill point
+1. array.every(callback function(element, index, array)):
+       element:正在被處理的element
+       index:正在處理的element
+       array:function接收的array是call every的那個陣列本身

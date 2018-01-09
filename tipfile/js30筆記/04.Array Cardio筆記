@@ -1,0 +1,59 @@
+4.Array Cardio筆記
+==============================
+1.filter練習 沒什麼大問題
+
+2.map練習 沒什麼大問題
+
+3.sort練習: 在sort的時候如果數字排序要小->大:a-b, 大->小:b-a
+			      但在字串的時候根據字母排序 return aLast > bLast ? 1 : -1; 這樣字母就會由小排到大
+
+			排序心法:return負值就不換,return正值就調換
+//old version
+const sort_lived = inventors.sort(function(pre,cur){
+  const prelived = pre.passed - pre.year;
+  const curlived = cur.passed - cur.year;
+
+  return curlived - prelived; //因為要回傳由大到小,所以b-a
+});
+//ES6 version
+const sort_lived = inventors.sort((pre,cur) => {
+  const prelived = pre.passed - pre.year;
+  const curlived = cur.passed - cur.year;
+
+  return curlived - prelived; //因為要回傳由大到小,所以b-a
+});
+
+4.reduce練習: 這個function感覺最難，他會把陣列中的元素依序執行，會把上一次執行完的結果回傳給下一個當作初始值繼續運算
+  語法:array.reduce(callback, initialValue);
+
+  注意:一般來說initialValue沒給的話，會拿陣列中第一個值當initialValue，這題如果初始值沒給0，最後callback會回傳一個object物件，而不是數字的總和，因此要指定0給他
+
+  const total = inventors.reduce((sum, inventor) => {
+    return sum = sum + (inventor.passed - inventor.year);
+  }, 0);
+
+5.sort練習:這題不難，練習把object屬性運算完之後在排序
+
+6.這題主要是去wiki練習找出需要的資料，比較特別的是由於querySelector回傳是一個nodeList
+  想要轉array有兩個方式
+  -1.const links = Array.from(category.querySelectorAll('a'));
+
+  -2.const links = [...category.querySelectorAll('a')]);
+
+7.主要是練習切割字串後排序，本來切出來會回傳一個陣列，不過透過下列的方式，個別塞進不同變數，就可以只取自己想要的變數做比較了!
+  const [aLast, aFirst] = pre.split(", ");
+
+8.reduce練習: 這題個人覺得最難的點在於我沒想到原來init值可以給物件型態....
+              而且這邊用了個小技巧原本應該在初始值物件裡面，幫各個物件初始化，bos在這裡直接給空物件，等進去callback再檢查物件，假設不存在，就幫他初始化!! 
+			        這樣就不用這麼辛苦在初始化那邊打了很長一串的清單....
+
+
+const sum_instance = data.reduce((obj, ins) => {
+  //obj init
+  if (!obj[ins]) {
+    obj[ins] = 0;
+  }
+
+  obj[ins]++;
+  return obj;
+}, {});

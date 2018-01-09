@@ -1,0 +1,6 @@
+17.Sort Without Articles筆記
+==============================
+一開始的想法是把陣列用空格拆開後，排除後再去比較，但發現會把原本陣列破壞掉
+後來想到在callback function 呼叫 compare method，比較完排序不會破壞原本的陣列內容
+
+最後就靠innerHTML塞進html這樣

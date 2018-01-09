@@ -1,0 +1,15 @@
+22.Follow Along Link Highlighter筆記
+==============================
+自己寫了一個只要滑鼠移上去，那個區塊就會自動變色的效果，看起來跟highlight是差不多的，
+但沒用到他原本css就寫好的highlight設定，於是打算再重寫一個，不過試了半天都不是很順利(原本還想用css變數去做...)，
+看了一下finish發現居然用span去覆蓋在表層.....bos的版本沒看寫不出來....
+
+skill point:
+1. span可以覆蓋在你想要的元素上面，加一點css設定就可以變成highlight了
+
+2. getBoundingClientRect()這個可以幫助你取得element元件的上下左右和高度寬度之類的，滿好用的
+
+3. 在做這種需要定位的事情，由於有可能會有滾輪滾動，於是再定位xy的定位還要加上scrollX跟scrollY!!
+
+4. mouseover/mouseout vs mouseenter/mouseleave : 
+   這兩者效果很像，差異在於前者特性會冒泡，如果滑進去子元素會一路往上一層觸發mouseover event

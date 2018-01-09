@@ -1,0 +1,16 @@
+29.Countdown Timer筆記
+==============================
+這題一樣在練習setInterval，但多了點東西，比較難的點在於怎麼讓enter按下去之後不要重新讀取頁面，導致輸入的資料不見。
+
+skill point:
+1.clearInterval(setInterval id)的使用方式 : 括弧裡面要塞由setInterval回傳的值
+
+2.preventDefault() : 
+  關於form按了enter不submit的方式，我自己土法煉鋼是判斷keycode來決定有沒有按enter，比較奇怪的是有人說直接return false就有用，測試後還是需要e.returnValue = false;才有作用.....
+
+  但比較好的方式還是作者本身寫的，透過判定submit event，接著再透過e.preventDefault()來取消enter submit的預設動作
+
+3.reset() : 用來清空表單(form)
+
+4.element.textContent : 
+  可以獲取element本身的text value(string)，或者設置字串給他，要注意的是如果設置textContent，會刪除其所有子節點，並被替換成指定的字串。

@@ -1,0 +1,25 @@
+8.Fun with HTML5 Canvas筆記
+==============================
+這題主要了解html5 canvas元素的用法
+
+skill point:
+1. canvas創建好，想在上面使用需要getContext("2d or 3d")
+
+2.相關屬性:
+	strokeStyle : 決定線的顏色
+	lineJoin : 決定線相交的樣式
+	lineCap : 決定線最後的邊緣的樣式
+	HSL(hue(色相), saturation(飽和度), lightness(亮度))
+	lineWidth : 決定筆的粗細
+	beginPath() : 
+
+3.canvas.addEventListener('mouseup', () => isdraw = false);
+  這邊的含意是最後會return isdraw = false，但下方的就只是在設定參數而已，並沒有return任何值，如果想要return值的話要自己+上去
+
+  canvas.addEventListener('mousedown', (e) => {              		 
+	  isdraw = true;
+	  [lastx, lasty] = [e.offsetX, e.offsetY];
+  });
+
+  順便再補充，使用隱式返回應該用大括號包起來，中間用逗號分隔，如下所示，只有一個statement，就可以省略return 
+  const win = winners.map((winner, i) => ({name: winner, race, place: i + 1}));

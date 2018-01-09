@@ -1,0 +1,8 @@
+13.Slide in on Scroll筆記
+==============================
+這題主要難點在怎麼抓到圖片的最底部...透過offsetTop會回傳距離parent(通常是指body)的頂部的距離再加上圖片自己本身的高度即可
+
+skill point:
+1.取得圖片最底部高度:ele.offsetTop + ele.height
+
+2.取得目前視窗高度: window.scrollY + window.innerHeight (滾輪滾動高度+視窗本身高度)

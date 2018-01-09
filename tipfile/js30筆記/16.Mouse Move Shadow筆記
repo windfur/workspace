@@ -1,0 +1,16 @@
+16.Mouse Move Shadow筆記
+==============================
+這題主要就再度複習操控css的方式，原本那個以中心點往外走的呈現方式可以等有空再回頭研究，我做的是簡易版，往四個方向飛而已
+
+skill point:
+1. text-shadow:就產生陰影
+
+2. contenteditable: 加在element裡可以讓它變成可修改區域
+
+3.這題看了別人的筆記解說才知道，原來是要說明es6中的解構賦值....，簡單說就是一種對於陣列或物件提取資料的簡易寫法，但閱讀性其實不太好懂...
+  ex:
+  	//下面這段與const height = hero.offsetWidth;等價
+  	const { offsetWidth: width, offsetHeight: height } = hero;
+    
+  	//下面這段與let x = e.offsetX;等價
+    let { offsetX: x, offsetY: y } = e;

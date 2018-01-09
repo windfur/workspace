@@ -1,0 +1,55 @@
+1.javascript drum kit筆記
+
+流程:
+1.先透過window.addEventListener監聽keydown event
+window.addEventListener('keydown', function(e){
+	//do thing
+
+})
+
+2.每顆按鈕都有自己的keycode，console.log(e) 可直接看event e裡面的屬性成員，裡面有記錄著keycode，
+  並且對應audio tag裡的data-key(<audio data-key="76" src="sounds/tink.wav"></audio>)
+  data-* attribute：簡單說明一下什麼是 data-* attribute，有時我們會需要使用到某些自定義的屬性
+  ，但是為了要避免大家在 HTML 中隨意的添加屬性，於是在 HTML5 中就多了 data-* attribte 這個屬性
+
+  之後透過document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  在 querySelector( ) 裡面，使用了 ES6 中的模版語言，它是使用 ` 符號（鍵盤左上角的~）來將，在模
+  版字串中如果有需要引入變數，則可以是用${ }，來代入變數，當我們按鍵按到了相對應 keyCode 時就可
+  以選到該元素，否則就會回傳null
+
+  注意:querySelector會回傳第一個相符合的結果，所以如果querySelector('audio')的話，會永遠回傳遞第
+  一個符合audio element
+
+3.audio tag內含有currentTime屬性，為了讓每次click都重新撥放，所以透過currentTime = 0來達成。也有play()函數可撥放
+
+4.為了加上click後讓按鈕變化的效果，我們要加上css中.playing(#:id .:class)，為了找出相對應的div，
+  <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+  </div>
+  在上方中可觀察到，可抓取div element，也能選擇抓取class，如果要選擇element，直接打div就好了。
+  const key = document.querySelector(`.class[data-key="${e.keyCode}"]`) 
+
+  在加上class的部分，如果是jquery，雖然可直接 key.addClass('playing')，但因為我們這邊是取出list
+  變成還要每個元素都去訪問，很不方便，在此使用 key.classList.add("playing")(這邊有個小技巧，
+  直接cosole.log(key)可直接看到有哪些屬性成員可以用)，取出classList，加上想要的class。
+
+5.最後我們希望每個按鈕變換之後可變回原本的樣子，因為在.key中有用transition，於是我們抓取transitionend
+  event，之後進去callback function removeTrans()移除playing class，完成!!
+  
+  const all = document.querySelectorAll(".key");
+  all.forEach(x => x.addEventListener("transitionend", removeTrans))
+
+  .key {
+    transition: all 0.07s ease;
+    //除了自行定義之外，尚有幾個已經預先定義好的函式：
+	
+	  ease, 等同於 cubic-bezier(0.25, 0.1, 0.25, 1.0)
+	  linear, 等同於 cubic-bezier(0.0, 0.0, 1.0, 1.0)
+	  ease-in, 等同於 cubic-bezier(0.42, 0, 1.0, 1.0)
+	  ease-out, 等同於 cubic-bezier(0, 0, 0.58, 1.0)
+	  ease-in-out, 等同於 cubic-bezier(0.42, 0, 0.58, 1.0)
+  }
+  
+  註:css selector https://www.w3schools.com/cssref/css_selectors.asp
+  

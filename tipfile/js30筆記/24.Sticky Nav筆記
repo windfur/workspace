@@ -1,0 +1,13 @@
+24.Sticky Nav筆記
+==============================
+這題一開始沒啥想法，於是先做只要滾動後中間字體會變大的部分!
+
+後來看了影片，學習的點有:
+1.元件有自己的offset，相關的屬性有:
+	offsetHeight   : return element的高度
+	offsetLeft     : return 跟offsetParent左邊界的距離 
+	offsetParent   : return element的上一層是誰
+	offsetTop      : return 跟offsetParent頂部的距離
+	offsetWidth    : return element的寬度
+
+2.有個細節是除了把nav bar固定外，最後額外padding相同的高度，這樣滾動的時候才不會有奇怪的瞬間位移

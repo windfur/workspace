@@ -1,0 +1,14 @@
+2.CSS + JS Clock筆記
+==============================
+1.學習取得日期 new Date();
+	
+2.認識css transition and transform 共同運用
+  transform-origin:預設50%，0%最左，100%最右
+  css座標について:
+  	原點在左上，往右:+x 往下:+y
+
+3.利用element.style.attibute來操作css
+
+4.學習setInterval()
+  
+  注意:參數呼叫function不用帶()，如果帶有()表示函數執行完畢後會回傳一個值回來丟給原本的function去接!!

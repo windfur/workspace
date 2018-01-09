@@ -1,0 +1,26 @@
+3.Update CSS Variables with JS筆記
+==============================
+1.querySelector return is a nodeList!! not an array!!
+
+2.利用 :root{--<varName>: <varValue>} 來建立 CSS 的變數，並且在 CSS 屬性值中使用 var(--<varName>) 來代入變數的值：
+/* 建立 css 變數 */
+:root {
+    --base: #ffc600;
+    --spacing: 10px;
+}
+
+/* 使用 css 變數 */
+img {
+    display:block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: var(--spacing);
+    background: var(--base);
+}
+
+3.我們可以利用 document.documentElement.style.setProperty('--<varName>', '<varValue>') 來動態修改 CSS 變數的值，但要記得要加上單位（例如，px）：
+document.documentElement.style.setProperty(`--${this.name}`, this.value + this.dataset.unit)
+
+  註:Document.documentElement 會回傳目前文件（document）中的根元素（Element），如：HTML 文件中的 <html> 元素。
+
+ 4.可以在html中透過設定data-attribute，並且在js中取得element.dataset，這樣就能取到所有自訂的data-attribute了

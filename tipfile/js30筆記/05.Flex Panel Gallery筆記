@@ -1,0 +1,25 @@
+5.Flex Panel Gallery筆記
+==============================
+1.flexbox屬性設定
+flex component本身也可以成為flex container
+
+2.justify-content:決定了內容元素與整個 Flexbox 的「水平對齊」位置
+
+3.align-items:決定了內容元素與整個 Flexbox 的「垂直對齊」位置
+
+4.flex-direction:表示 Flexbox 內容元素的「排列方向」
+
+5.flex:由三個屬性組合而成，依照先後順序分別是「flex-grow」、「flex-shrink」和「flex-basis」，如果 flex 只填了一個數值 ( 無單位 )，那麼預設就是以 flex-grow 的方式呈現
+
+flex-grow：數字，無單位，當子元素的 flex-basis 長度「小」於它自己在父元素分配到的長度，按照數字做相對應的「伸展」比例分配，預設值為 1，設為 0 的話不會進行彈性變化，不可為負值。
+
+flex-shrink：數字，無單位，當子元素的 flex-basis 長度「大」於它自己在父元素分配到的長度，按照數字做相對應的「壓縮」比例分配，預設值為 1，設為 0 的話不會進行彈性變化，不可為負值。
+
+flex-basis：子元素的基本大小，作為父元素的大小比較基準，預設值為 0，也因為預設值為 0，所以沒有設定此屬性的時候，會以直接採用 flex-grow 屬性，flex-basis 也可以設為 auto，如果設為 auto，就表示子元素以自己的基本大小為單位。
+
+6.transform: translateY(100%):指定元素由參考點縱向移動x距離。css y軸往下為+值 所以元素會往下跑
+
+7.透過設定open-active讓元素能夠產生回到原位的效果
+
+8.透過toggle(xxx)，如果classList原先裡面有相符合的class就刪除，否則就新增
+  

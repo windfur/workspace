@@ -1,0 +1,17 @@
+23.Speech Synthesis筆記
+==============================
+這題有個點非常靠邀，那就是window.speechSynthesis.getVoices()這方法，不能在一開始loadpage的時候就呼叫，不然會有很大的機會都是空陣列...
+原因是因為一開始loadpage可能會有短暫延遲，還沒讀取好就呼叫他自然就空掉了...
+比較保險的做法是監聽voiceschanged event，這個會在當頁面讀取好了，第一次getVoices把值塞給voicelist發生變化後呼叫，這時再去.getVoices()就不會空值了
+
+剩下就是一些關於元件屬性操作的練習，一開始也困擾在如何得到下拉選單選取的值，結果庸人自擾，直接this.value就出來了...
+不過一開始在塞innerHTML的時候忘記補value屬性給他，這邊紀錄一下免得之後實作又忘記了。
+而且在替換不同語系的聲音的時候，忘記filter是return array，find 才是return value，看來array的熟練度還是很不夠..
+
+最後大概就是語音撥放的問題，這邊好像有發現一直狂按的話，好像會死掉..(?)
+
+skill point:
+1. window.speechSynthesis and SpeechSynthesisUtterance :
+   左方像資料來源，右方就是專門撥放聲音的api還滿有趣的
+
+2. 如果只是要取變化後的值，用change event就好了，不要笨還在那邊用各種奇怪的event...

@@ -1,0 +1,7 @@
+26.Stripe Follow Along Nav筆記
+==============================
+這題最雷的點就在於那個background如果單純直接抓dropdown的getboundingClientRect的top去做偏移量，若上方又多了其他element，
+background的偏移量就會產生誤差...這是最難想通的點，原本的解答會要去抓nav到window的距離，再用dropdown去扣掉他，
+實際上想通後根本不用這麼複雜...因為nav position是relative，background是absolute，參考距離就是以nav為基準點，在y的偏移量根本直接抓nav的高度就好了....
+不用在那邊扣來扣去很麻煩= =
+為了想通偏移量的問題卡好久ORZ

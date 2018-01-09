@@ -1,0 +1,8 @@
+9.Dev Tools Domination筆記
+==============================
+skill point:
+1.console.dir : 直接看element dom view
+
+2.console.group and console.groupEnd : 可以將資料分組呈現
+
+3.console.time() and console.timeEnd() : 計算執行時間要多久，要注意的是括號內的字串要一模一樣

@@ -1,0 +1,49 @@
+6.Ajax Type Ahead筆記
+==============================
+1.fetch(): 被用來執行送出Request(要求)的工作，如果成功得到回應的話，它會回傳一個帶有Response(回應)物件的已實現Promise物件。
+
+           注意:如果接收到代表錯誤的狀態碼，return回來的Promise不會被標記為reject，而是會在ok的屬性設成false，並標記成resolve。只有當網路故障或者請求被阻止才會被標記為reject。
+
+fetch('http://abc.com/', {method: 'get'})
+.then(function(response) {
+    //處理 response
+}).catch(function(err) {
+    // Error :(
+})
+
+2. 展開運算子"...":展開運算子會把一個陣列展開(expand)成個別的數值
+ex:
+var params = [ "hello", true, 7 ]
+var other = [ 1, 2, ...params ] // [ 1, 2, "hello", true, 7 ]
+
+var str = "foo"
+var chars = [ ...str ] // [ "f", "o", "o" ]
+
+3.regexp flag:
+	g:全局匹配;找到所有匹配，而不是在第一个匹配後停止
+	i:忽略大小寫
+
+4.找到資料後寫入html的方法!!
+  首先要注意的是.map是回傳一個陣列，因此我們還需要.join()將陣列中的元素合併成一個字串再傳回給innerHTML!
+
+  註:join()方法將陣列中所有元素連接、合併成一個字串。
+  
+  這邊學習的點是如何在符合的字串中顯示，先創一個regexp把傳進來的字串變數取代掉，在寫入自己的class(要在css定義好)，這裡面也能用模板語言
+
+function displayResult() {
+  const matcharray = findMatch(this.value, cities);
+  const html = matcharray.map(place => {
+  	const reg = new new RegExp(this.value, 'gi');
+    const cityName = place.city.replace(reg, `<span class="h1">${this.value}</span>`);
+    const stateName = place.state.replace(reg, `<span class="h1">${this.value}</span>`);
+
+    return `
+      <li>
+        <span class="name">${place.city}, ${place.state}></span>
+        <span class="population">${place.population}></span>
+      </li>  
+    `;
+  }).join("");
+
+  suggestions.innerHTML = html;
+}

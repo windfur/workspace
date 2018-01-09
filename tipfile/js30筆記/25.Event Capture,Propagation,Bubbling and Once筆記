@@ -1,0 +1,11 @@
+25.Event Capture,Propagation,Bubbling and Once筆記
+==============================
+這篇主要介紹event listener觸發時，會先從最外層往最底層一路capture並且存起來，直到最終目標觸發的物件，
+最後從最底層一路開始往上bubbling直到最外層，如果capture設成true，那麼在觸發事件時最一開始capture到時就會進去call back function，一般預設是false，也就是會到最底層後，從最底層到最外層依序進去callback function裡面
+
+skill point:
+1.了解capture and bubbling
+
+2.event.stopPropagation() : 抓取到目標後就不再往外或往內傳遞了(看是選擇capture還是bubbling時候執行)
+
+3.once:這個如果設成true，那麼這個元件的listener觸發一次後就會解除listener(unbinding)

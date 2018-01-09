@@ -1,0 +1,18 @@
+10.Hold Shift and Check CheckBoxes筆記
+==============================
+這題的難點在於怎麼紀錄第一次選取跟第二次選取，以及怎麼判斷壓著shift的時間點
+
+即便是正解也存在一些問題，像是按著shift點自己會直接變成全選、只能單次shift批次選取、
+對於最後一次的選取點，假設取消之後，再按shift選取其他的選項，會錯誤的拿此消失的點去當起始點
+
+自己的版本與正解的差異在於，我並非用between flag來判斷是否再shift壓住的期間，而是直接在每個選項加入id後，
+每次選取都會記錄當次和上次的id，foreach在此id區間的就全部打勾。
+
+並且修正會拿消失的點當基準點的問題，
+只有真正選取了選項之後才會記錄成last one，取消選項就不紀錄，這樣就能達成以確定有check的選項當基準點。
+
+只是也有個問題是，如果最後一次的點取消了或者是一開始都還沒點，一定要先點一個選項，再按shift，不然會有type errorXD
+
+skill point:
+1.如果要取得element底下的第一個元素，請用element.firstElementChild.attribute
+2.console.log(e) 跟 console.log(this)是個好東西，不知道this跟傳進來的event是什麼，console看下去就知道了XD

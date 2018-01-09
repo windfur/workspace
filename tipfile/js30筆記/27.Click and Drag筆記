@@ -1,0 +1,34 @@
+27.Click and Drag筆記
+==============================
+這題主要是要認識mouse event中 page、offset、client、screen中有什麼差異，下面會詳細解釋，不過這題捲動的實作方式，跟bos的略有不同，
+bos主要是透過取得每次滑動時滑鼠觸發event的位置 ~ element.offsetLeft的位置 - 一開始滑鼠點下去的位置 ~ element.offsetLeft的位置。
+
+而我的方式是我每次會記錄最後一次x軸的位子，然後因為希望滑鼠往左的時候，視窗往右捲動，所以拿lastx - 當前x軸位置，一開始因為沒有想清楚，
+以為mousemove觸發的過程在滑鼠點下去到起來的過程只會觸發一次，於是只有用最一開始點下去的x軸位子下去計算，當觸發多次的時候，會有重複計算位移距離問題，導致捲動會越來越快....最後在每次move事件結束都記錄最後的位子就解決了!
+
+scrollleft = initx - e.clientX;    ->  每次都會拿當前距離扣掉初始位子，但mouseevent會觸發多次，導致先前移動的距離又加了一次
+items.scrollLeft = scrollleft + items.scrollLeft;
+
+skill point:
+1.element.scrollLeft : 可以捲動左右視窗
+
+2.mouse event中的page、offset、client、screen代表意思 :
+	screen : 這個最簡單，這是以實際螢幕的邊框當作參考點得到的距離，所以不同螢幕大小，在相同比例的位子得到的距離會不同
+
+	offset : 這個會以當前滑鼠滑進去哪個element來決定，假設滑入A element，那就會以這個element的左上角當原點得到他的距離，
+		     但這邊還要談談offset本身的概念，
+		   
+		   	 先提到offsetParent，為元素的一個唯讀屬性，其值為上層最接近的有設定 position 的容器元素。更精確的說是 position 不為 static 的元素。這點非常重要，假設往上一層找發現沒有任何有關position定位的屬性，他會在往更上一層找，直到找到為止...。當沒有任何 positioned 的元素時最接近的 table cell 或根元素為 offsetParent。HTML 兼容模式 body 為 offsetParent。display: none 時 offsetParent 為 null。
+
+		   	 這邊還要提到，根據瀏覽器的不同，offset實作的方式不同，導致計算方式也不同，所以才出了element.getBoundingClientRect()讓大家取得物件的各種上下左右屬性，只是display不能設為none，不然會回傳都是0..
+
+	page :   這跟client很容易搞混，但知道主要差異就好懂多了，page主要是根據document座標來決定值，也就是說不管如何捲動，
+		     他的數字都是固定不變的。
+
+
+	client : 這個主要是根據window座標來決定，說白話一點就是根據瀏覽器視窗大小當作參考點回傳距離，如果瀏覽器縮放大小的話，
+			 回傳的最大值也會跟著改變，跟page的差異看下面舉例說明。
+
+    舉個例子:假設你的Y軸總共距離是1000，但是窗最大就只能顯示250的距離，即便你滾動到下方750的地方，他的pageY就是750，如果是
+		     clientY的話，由於視窗最大就250，所以不管怎麼點，最大值回傳就是250。
+
