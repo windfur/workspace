@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+
+<script>
+	const konami = [38, 40, 38, 40, 37, 39, 37, 39, 66, 65];
+
+	let array = [];
+	let result;
+
+	function pushin(e) {
+		if(array.length < 10)
+		{
+			array.push(e.keyCode);
+			if(array.length == 10)
+				result = array.every(compare);
+		}
+		else
+		{
+			array = array.slice(1);
+			array.push(e.keyCode);
+			result = array.every(compare);
+		}
+
+		console.log(array);
+		console.log(result);
+		
+		if(result)
+			cornify_add();
+	}
+
+	function compare(ele, index) {
+		if(konami[index] === array[index]) 			//array[index]等價於ele，這邊ele也是array傳過來的
+			return true;
+		else
+			return false;
+	}
+
+	window.addEventListener('keydown', pushin);
+</script>
+
+</body>
+</html>

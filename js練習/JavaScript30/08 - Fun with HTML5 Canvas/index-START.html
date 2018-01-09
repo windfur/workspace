@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+
+<style>
+  html, body {
+    margin:0;
+  }
+</style>
+
+<body>
+	<canvas id="draw" width="800" height="800"></canvas>
+	
+
+
+	<script>
+		var canvas = document.querySelector("#draw");
+		var pen = canvas.getContext("2d");
+
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		pen.strokeStyle = "#7D7DFF";  //畫筆的初始顏色
+		pen.lineJoin = "round";      //線條相交時的樣式，round是圓邊、bevel是斜角、miter是尖角
+		pen.lineCap = "round";		 //線條結束時的樣式，round是圓邊、butt和square看起來都是平直的邊緣
+		
+
+		let isdraw = false;
+		let lastx = 0;
+		let lasty = 0;
+		let hsl = 0;
+		let linewidth = 1;
+
+		function draw(e) {
+			console.log(e);
+			if(!isdraw)
+				return;
+
+			hsl++;
+			pen.strokeStyle = `hsl(${hsl}, 100%, 50%)`;
+			if(hsl > 359)
+				hsl = 0;
+
+			pen.lineWidth = linewidth;
+			linewidth++;
+			if(linewidth > 20)
+				linewidth = 1;
+			
+			// [lastx, lasty] = [e.offsetX, e.offsetY];  				 //加在這裏的話，會變成每次都是從自己畫到自己，變成點狀直線圖
+			
+			//這行很重要，如果沒有這行的話每次畫線都會當作是同一條線...包含顏色變化也都會一起 囧
+			pen.beginPath();			
+			pen.moveTo(lastx, lasty);
+			pen.lineTo(e.offsetX, e.offsetY);
+			pen.stroke();
+
+			lastx = e.offsetX;
+			lasty = e.offsetY;
+		}
+
+		
+
+		canvas.addEventListener('mousemove', draw);
+		canvas.addEventListener('mousedown', (e) => {              		 //但這邊就只是在設定參數而已，並沒有return任何值
+			isdraw = true;
+			[lastx, lasty] = [e.offsetX, e.offsetY];					 //選擇在此給初始值，才會讓只有一開始點下去的地方當作moveTo的基準
+		});
+
+		canvas.addEventListener('mouseup', () => isdraw = false);  	     //這邊的含意是最後會return isdraw = false
+
+
+	</script>
+
+
+</body>
+</html>

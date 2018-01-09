@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background:mistyrose;
+  }
+
+  .three {
+    background:coral;
+  }
+</style>
+
+<button></button>
+<script>
+  const divs = document.querySelectorAll("div");
+  const button = document.querySelector('button');
+  console.log(divs);
+
+  function print(e) {
+    console.log(this.classList.value);  //bubbling:如果點到最裡面的div3，會同時往上觸發2和1
+    console.log(this);
+    // e.stopPropagation();                //stop bubbling
+  }
+
+  // document.body.addEventListener("click", print)
+  divs.forEach(div => div.addEventListener("click", print, {
+    capture : false,
+    once: true
+
+  }));
+
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    // once: true
+  });
+
+</script>
+</body>
+</html>

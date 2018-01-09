@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click and Drag</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="items">
+    <div class="item item1">01</div>
+    <div class="item item2">02</div>
+    <div class="item item3">03</div>
+    <div class="item item4">04</div>
+    <div class="item item5">05</div>
+    <div class="item item6">06</div>
+    <div class="item item7">07</div>
+    <div class="item item8">08</div>
+    <div class="item item9">09</div>
+    <div class="item item10">10</div>
+    <div class="item item11">11</div>
+    <div class="item item12">12</div>
+    <div class="item item13">13</div>
+    <div class="item item14">14</div>
+    <div class="item item15">15</div>
+    <div class="item item16">16</div>
+    <div class="item item17">17</div>
+    <div class="item item18">18</div>
+    <div class="item item19">19</div>
+    <div class="item item20">20</div>
+    <div class="item item21">21</div>
+    <div class="item item22">22</div>
+    <div class="item item23">23</div>
+    <div class="item item24">24</div>
+    <div class="item item25">25</div>
+  </div>
+
+<script>
+    const items = document.querySelector(".items");
+    var isdrag = false;
+    var scrollleft = 0;
+    var lastx;
+
+    items.addEventListener("mousedown", (e) => {
+        isdrag = true;
+        items.classList.add("active");
+        lastx = e.clientX;
+        console.log(e);
+
+    });    
+    
+    items.addEventListener("mouseup", () => {
+        isdrag = false;
+        items.classList.remove("active");
+    });    
+    
+    items.addEventListener("mousemove", (e) => {
+        if(isdrag == true)
+        {
+            console.log(e);
+            console.log("page x and y");
+            console.log(e.pageX, e.pageY);
+
+            console.log("client x and y");
+            console.log(e.clientX, e.clientY);
+
+            //offset是根據你滑進哪個element，針對他左上角的原點去計算值
+            console.log("e.offset x and y");
+            console.log(e.offsetX, e.offsetY);
+
+            //這邊可以乘上喜歡的倍數，讓他捲動得更快
+            scrollleft = lastx - e.clientX;
+            console.log("scrollleft :");
+            console.log(scrollleft);
+
+            items.scrollLeft = scrollleft + items.scrollLeft;
+            console.log(items.scrollLeft);
+            
+            lastx = e.clientX;
+        }
+        else
+            return;
+    });    
+    
+    items.addEventListener("mouseleave", () => {
+        isdrag = false;
+        items.classList.remove("active");
+    });    
+
+    // window.addEventListener("click",showxy);
+    // function showxy(e) {
+    //     console.log("page x and y");
+    //     console.log(e.pageX, e.pageY);
+
+    //     console.log("client x and y");
+    //     console.log(e.clientX, e.clientY);
+    // }
+
+</script>
+
+</body>
+</html>
