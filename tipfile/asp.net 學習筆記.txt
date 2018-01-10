@@ -1,0 +1,163 @@
+Viusual setting
+
+visual studio 快捷鍵
+ctrl + t : 尋找class
+ctrl + shift + f : 在所有檔案中尋找特定字串
+ctrl + F3 : find next selected
+ctrl + shift + F3 : find previous selected
+資源連結有問題 專案 右鍵 屬性 建置時啟用程式碼分析取消打勾
+========================================
+asp.net and MVC 學習筆記
+
+routing in MVC
+url <-> xxx.aspx : url mapping to request handler
+url <-> xxxController and index action
+
+url pattern
+url: "{controller}/{action}/{id}"
+
+Controller 在使用 Service連線查詢DB的時候 記得要用using包起來!!!
+=============================================
+Controller : handles any incoming URL request
+All the public methods in the Controller class are called "Action methods"
+
+action method rules:
+1.Action method must be public. It cannot be private or protected
+2.Action method cannot be overloaded
+3.Action method cannot be a static method.
+
+ActionResult : is a base class of all the result type which returns from Action method.
+FileContentResult/ FilePathResult/ FileStreamResult : Represents the content of a file
+RedirectToRouteResult : Represent another action of same or other controller
+PartialViewResult : Returns HTML from Partial view
+HttpUnauthorizedResult : Returns HTTP 403 status
+
+Action selectors (要用要加上中括弧)
+1.ActionName : specify a different action name than the method name
+2.NonAction : indicates that a public method of a Controller is not an action method
+3.ActionVerbs : is used when you want to control the selection of an action method based on a Http request method. such as:HttpGet, HttpPost, HttpPut, HttpDelete, HttpOptions & HttpPatch
+4.AcceptVerbs : apply multiple http verbs
+ex:
+	[AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
+	public ActionResult GetAndPostAction()
+	{
+	    return RedirectToAction("Index");
+	}
+
+=============================================
+Model : domain specific data and business logic in MVC architecture.
+Model objects retrieve and store model state in the persistance store like a database.
+
+=============================================
+ViewBag
+only transfers data from controller to view, not visa-versa. ViewBag values will be null if redirection occurs.
+
+=============================================
+ViewData is a dictionary which can contain key-value pairs where each key must be string.
+ViewData is similar to ViewBag. It is useful in transferring data from Controller to View.
+
+==============================================
+linq
+
+inner join:
+list people;(要join進來的表格)
+list pets;(主要表格)
+var query = from tempvar1 in people 
+			join tempvar2 in pets on tempvar1.name equals tempvar2.name
+			select new { 新欄位名稱1 = tempvar1.name, 新欄位名稱2 = tempvar2};
+
+重要請注意:
+使用 equals 時，左側索引鍵會取用外部來源序列，而右側索引鍵會取用內部來源
+
+
+
+
+=============================================
+委派（deletate）
+其實也是類別，只是它是一種特殊的類別。
+多特殊？委派類別在宣告的同時，就必須要定義好此委派類別中【唯一】的方法簽章（方法回傳值和方法參數的組合）。是的，最特殊的地方就是每個委派類別只有一個方法，不能自訂其他額外的成員，不像一般類別要多少成員屬性、方法、欄位，都可以自由定義。委派類別還有一個特性，它是屬於「密封」（sealed）類別，也就是無法被繼承。
+
+委派的用途是什麼？我個人最喜歡的解釋是，委派可以讓我們把一個流程中某個部分之邏輯，留給呼叫者決定
+
+其實整個委派應該要切成宣告端、邏輯端、呼叫端三個面向來看：
+
+宣告端：定義委派結構。
+邏輯端：設定執行細節。
+呼叫端：負責建立宣告和邏輯連接關係，並引動（Invoke）委派以執行邏輯端所設定之執行細節。
+
+如果型態有?表示可接受null值，但foreach的區域變數不可是null值 要嘛DB改成not null 不然就是model後面要.Value(ex:Unit = a.Unit.Value)
+==============================================
+頁面連結用法
+View
+<div width="100">
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (string md in ViewBag.ID_list)    ->Controller的ViewBag傳來的ID_List
+        {
+            <tr>
+                <td><a href="@(Url.Action("DataPrint")+"?moteeui="+md)">@md </a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+============================================================================================
+Controller
+public ActionResult Index()
+{
+    List<string> StnModel = null;
+    using (DALLoraWanServices DALWSvc = new DALLoraWanServices())
+    {
+        StnModel = DALWSvc.get_ID_list();
+    }
+    ViewBag.ID_list = StnModel;   -> 因為View()裡面只能放model,如果要傳list的話 可用ViewBag
+    return View();
+}
+
+轉json方法
+public JsonResult get_payload_data(string moteeui)
+{
+    DALLoraWanServices LWSvc = new DALLoraWanServices();
+    var rtn = LWSvc.get_payload_data(moteeui);
+    return this.Json(rtn, JsonRequestBehavior.AllowGet);
+
+}
+============================================================================================
+Service
+查詢欄位用法
+public List<string> get_ID_list()
+{
+    DALLoraWanServices LWSvc = new DALLoraWanServices();
+    var rtn = (from x in LWSvc.get_LoraData_list()
+               group x by x.moteeui into a
+               select a.Key).ToList();
+    return rtn;
+}
+
+public List<PayloadModel> get_payload_data(string id)
+{
+    IQueryable<LoraDataModel> rtn;
+    rtn = _db.LoraDataList;
+    var tmpdata = from a in rtn
+                  where a.moteeui == id
+                  select new PayloadModel
+                  {
+                      Unit = a.Unit,
+                      NodeSerialNo = a.NodeSerialNo,
+                      DataType = a.DataType,
+                      WaterLevel = a.WaterLevel,
+                      Rainfall = a.Rainfall,
+                      Temperature = a.Temperature,
+                      SensingTime = a.SensingTime,
+                      stationFlag = a.stationFlag
+                  };
+
+    List<PayloadModel> Payload_list = tmpdata.ToList();
+    return Payload_list;
+}
+

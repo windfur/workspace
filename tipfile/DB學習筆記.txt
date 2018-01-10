@@ -1,0 +1,49 @@
+DB學習筆記(基本篇)
+
+SQL提供整數與小數兩種數值型態
+
+常用型態:
+字串 日期 數字 null
+數字計算用DIV會取整數
+
+查詢子句注意順序 邏輯運算子有優先順序 1.not 2.and 3.or
+
+
+where
+group by   分組設定
+having     分組條件
+order by   排序
+limit      限制設定
+
+use + 指定資料庫名稱
+
+select col1,col2,... from db名稱(指定不是目前使用中的DB名字).表格
+
+select col as '別名' (別名建議包起來)
+
+select col from table where col in ('xxx','xxx')資料中有符合括弧內的其中一個就算符合
+
+查詢欄位是null的時候要用is 或者<=>，反之則用is not 或者<>
+
+where like w_ ->一個_表示1個任何字元，有幾個底線就代表要有幾個字元
+
+order by (+欄位1|運算|位置編號,欄位2|運算|位置編號) asc:由小排到大(預設) desc:由大排到小 
+
+limit + 數字 指定回傳數量(5的話就回傳5筆)
+limit 數字1,數字2 跳過數字1的數量筆數，回傳數字2的數量(3,2 就跳過3筆之後，回傳接下來的2筆)
+
+select distinct col 排除重複資料
+
+Select * from table1
+Left outer join table2 on table1.FK = table2.PK 
+在這例子，代表了table1就是我們的Left table，所以Left outer join後，table1所有資料都應該顯示出來，而符合table1.FK = table2.PK條件的資料，應該會帶出Table2的相關欄位資料。
+
+Select * from table1
+Right outer join table2 on table1.FK = table2.PK 
+在這例子，table2代表我們的Right table，所以Table2所有資料應該顯示出來，並且符合交集條件的資料，應該有table1的欄位資料。
+
+相關子查詢:當內簿子查詢會用到外部查詢欄位時就是相關子查詢
+SELECT SUM(a1.Sales) FROM Store_Information a1
+WHERE a1.Store_Name IN
+(SELECT Store_Name FROM Geography a2
+WHERE a2.Store_Name = a1.Store_Name);

@@ -1,0 +1,15 @@
+包版文件
+1.連線後先檢查project的jre版本和正式機版本一不一樣
+  若有不同，注意project facets也要檢查
+  因版本不同產生的錯誤，project property -> jre library裡面有個access rule可以用來取消compiler報錯
+
+
+2. project -> export -> web -> war file
+  注意:export sourece file不要打勾
+
+3.包好之後7zip打開，解壓出WEB-INF\classes\com和work這兩個資料夾，先備份正式機的com and work資料夾到back up
+  注意:如果像宜蘭一樣有zk和html5兩個版本，也請建立yilan2這類的資料夾。
+
+4.最後先停掉tomcat7，在替換檔案，替換完之後重啟server 連線檢查狀況，並且check web service有沒有消失
+
+

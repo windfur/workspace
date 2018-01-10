@@ -1,0 +1,101 @@
+備註事項
+換版的時候一般要備份COM資料夾和work
+
+locator:中央 procal:地方 (二河局例外)
+
+重要! 產圖要放tmp資料夾 底下還要建立raw跟rain
+E:\work_eclipse\for_web_H_P\WorkTomcat\Hsinchu\webapps\hsinchu_html5\tmp\rain
+E:\work_eclipse\for_web_H_P\WorkTomcat\Hsinchu\webapps\hsinchu_html5\tmp\raw
+
+MVC
+V: view .uzl檔案
+
+C: controller
+
+M: model (service+dao+dbxml)
+
+待學習目標
+1.彰化水情系統整體架構流程(要能畫出組織架構圖) o
+2.session cookie觀念釐清
+3.了解zk framework原理(有空再追) o
+
+
+webcontexnt->context.xml 看自己DB連到哪一台
+
+login.xml位子在wavegis_ZK3.6_java6.0_v2010_02_10v1.jar->dbxml.function
+
+showdata.setModel(list);
+showdata.setItemRenderer(this); 把資料render出來
+
+日期格式化
+SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+timeout排程檔案在conf -> arrangementContext.xml
+
+=====================================================================================================================
+宜蘭 氣象資料 全省即時潮位(按鈕pop up)
+
+																			(view)				(Controller)					(Model)
+weather_info.zul + wetherInfoController(新增onClick事件) -> pop up -> Current_tide.zul -> Current_tideController -> CourrentTideService and TideForm -> CurrentTideDao -> CurrentTide.xml(定義sql)
+
+commit格式化
+[added][3][新增即時潮位按鈕功能]
+
+=====================================================================================================================
+新竹水情
+入口
+login.zul + L4LoginController -> index.zul + IndexController -> 水位計 雨量站 CCTV 抽水機 村里警戒
+
+水位計列表(countySelect()已經沒有用了) version:zk
+WaterLevel.zul + L4WaterLevelController 
+	-> RawDrawService (畫圖用)
+		-> RawDataDao -> RawStation.xml
+		-> RawDataEgsDao -> RawStationEgsp.xml
+
+	-> WaterLevelService -> getWaterLevelData(HashMap condition)
+		-> RawDataDao -> RawStation.xml
+		-> RawDataEgsDao -> RawStationEgsp.xml
+		-> CountyDao -> County.xml
+
+	->CountyMoveService
+
+	-> switchCondition(核心部分)
+
+	List get data -> ListModelList add data(List) -> Listbox.setModel(ListModelList) and setItemRenderer(this)
+
+抽水站
+VehicleCondition_Show.zul + MonitoringCarController
+	-> MonitoringCarService -> mainService = (SpringController) getServiceManager().getMonitoringCarService()
+		->CarUIFactory
+
+
+html5 getdata流程					(Controller)
+login.zul -> index.html + index.js -> xxx.java -> SingletonProxy(為了省去每次xxxSingleton.getInstance,因此將他等價於proxy.getdata) -> xxxSingleton.java(for build instance, getdata and setdata)
+
+
+index.js
+圖層需要註解一些東西
+
+
+===========================================================================
+biz網頁
+帳號 12345678
+密碼 A1234567
+
+http://localhost:58476/RFQ/RFQListForCompany
+詢價通知
+
+測試機發行帳號密碼
+wavegis
+Wavegis
+===========================================================================
+js es6
+新增了模板語言 使用` 這個東西
+ex:
+let component_es6 = `
+<header>
+    <div class='banner'>
+        <img src="img1.jpg>
+    </div>
+</header>
+`
